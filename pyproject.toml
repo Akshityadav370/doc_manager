@@ -1,0 +1,19 @@
+[project]
+name = "doc-manager"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Akshit", email = "akshit07032001@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "streamlit>=1.67.0",
+]
+
+[project.scripts]
+doc-manager = "doc_manager:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
