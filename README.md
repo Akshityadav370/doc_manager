@@ -1,0 +1,11 @@
+# venv\Scripts\activate
+
+uv add -r requirements.txt
+
+add -> PyMuPDF==1.27.2.2 --> .toml
+uv sync
+
+pip install -r requirements.txt
+
+pip uninstall pymupdf
+pip install --no-cache-dir pymupdf
