@@ -1,9 +1,10 @@
 
 from db.database import get_connection
+from core.models import Document
 
 class DocumentRepository:
     
-    def add_document(self, doc):
+    def add_document(self, doc:Document):
         conn = get_connection()
         cursor = conn.cursor()
 
@@ -14,15 +15,49 @@ class DocumentRepository:
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            doc[0],
-            doc[1],
-            doc[2],
-            doc[3],
-            doc[4],
-            doc[5],
-            doc[6],
-            doc[7]
+            doc.name,
+            doc.path,
+            doc.thumbnail_path,
+            doc.tags,
+            doc.description,
+            doc.upload_date,
+            doc.lecture_date,
+            doc.total_pages
         ))
 
         conn.commit()
         conn.close()
+
+    def search_documents(self, tag=None, date=None):
+        print("line 2")
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        query = "SELECT * FROM documents"
+        conditions = []
+        params = []
+
+        # WHERE , OR
+
+        if tag:
+            conditions.append("tags LIKE ?")
+            params.append(f"%{tag}%")
+
+        if date:
+            conditions.append("lecture_date = ?")
+            params.append(date)
+        
+        if conditions:
+            # last_part_query = " OR ".join(conditions)
+            # query += " WHERE " 
+            # query+=last_part_query
+
+            query += " WHERE " + " OR ".join(conditions)
+        
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        print("rows", rows)
+        conn.close()
+
+        # list of document objects
+        return [Document(*row) for row in rows]
