@@ -24,6 +24,9 @@ class DocumentService:
         print("line 1")
         return self.repo.search_documents(tag, date)
 
+    def get_all_documents(self):
+        return self.repo.get_all_documents()
+
     def upload_document(self, uploaded_file, tags, description, lecture_date=None):
         
         doc = []

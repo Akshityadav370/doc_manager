@@ -9,3 +9,7 @@ wheels/
 
 # Virtual environments
 .venv
+.env
+
+data/documents.db
+db/__pycache__/
